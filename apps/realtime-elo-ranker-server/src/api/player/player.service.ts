@@ -2,12 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { Player } from 'src/entities/player.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class PlayerService {
   constructor(
     @InjectRepository(Player)
     private readonly players: Repository<Player>,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   findOne(id: string): Promise<Player | null> {
@@ -23,8 +25,9 @@ export class PlayerService {
   }
 
   create(player: Player): Promise<Player> {
-    return this.players.save(player);
-  } 
+    this.eventEmitter.emit('ranking.event', { type: 'RankingUpdate', player: player });
+    return this.save(player);
+  }
 
   save(player: Player): Promise<Player> {
     return this.players.save(player);
