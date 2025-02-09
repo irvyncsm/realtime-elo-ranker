@@ -8,6 +8,7 @@ import { RankingController } from './api/ranking/ranking.controller';
 import { RankingModule } from './api/ranking/ranking.module';
 import { MatchModule } from './api/match/match.module';
 import { PlayerModule } from './api/player/player.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PlayerModule } from './api/player/player.module';
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    EventEmitterModule.forRoot(),
     PlayerModule,
     RankingModule,
     MatchModule,

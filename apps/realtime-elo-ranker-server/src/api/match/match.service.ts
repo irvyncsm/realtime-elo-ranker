@@ -13,7 +13,6 @@ export class MatchService {
 
     @InjectRepository(Player)
     private readonly players: Repository<Player>,
-
     private eventEmitter: EventEmitter2,
   ) {}
 
@@ -21,8 +20,8 @@ export class MatchService {
     return this.matches.find();
   }
 
-  create(match: Match): Promise<Match> {
-    return this.save(match);
+  async create(match: Match): Promise<Match> {
+    return this.matches.save(match);
   }
 
   computeProbability = (rating1: number, rating2: number) => {
@@ -70,8 +69,12 @@ export class MatchService {
       draw,
     );
 
-    await this.players.save(winnerPlayer)
-    await this.players.save(loserPlayer)
+    await this.players.save(winnerPlayer).then(() => {
+      this.eventEmitter.emit('ranking.event', { type: 'RankingUpdate', player: winnerPlayer });
+    });
+    await this.players.save(loserPlayer).then(() => {
+        this.eventEmitter.emit('ranking.event', { type: 'RankingUpdate', player: loserPlayer });
+    });
     
     return { winner: winnerPlayer, loser: loserPlayer };
   }
