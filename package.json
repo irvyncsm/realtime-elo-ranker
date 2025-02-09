@@ -11,13 +11,18 @@
     "apps:api-mock:start": "pnpm run --filter ./apps/realtime-elo-ranker-api-mock start",
     "libs:ui:build": "pnpm run --filter ./libs/ui build",
     "libs:ui:test": "pnpm run --filter ./libs/ui test",
-    "docs:swagger:start": "pnpm run --filter ./docs/swagger start"
+    "docs:swagger:start": "pnpm run --filter ./docs/swagger start",
+    "test": "jest"
   },
   "devDependencies": {
     "@nestjs/cli": "^11.0.1",
+    "@nestjs/testing": "^11.0.1",
+    "@types/jest": "^29.5.14",
     "generate-react-cli": "^8.4.9",
+    "jest": "^29.7.0",
     "motion": "^11.17.0",
     "next": "15.1.4",
+    "ts-jest": "^29.2.5",
     "typescript": "^5"
   },
   "dependencies": {
