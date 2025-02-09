@@ -14,6 +14,16 @@ export class PlayerController {
     @Res() res: Response,
   ): Promise<Response<Player | Error>> {
 
+    const alreadyExist = await this.playerService.playerExists(createPlayerDto.id);
+
+    if (alreadyExist) {
+      Logger.error(`Joueur ${createPlayerDto.id} déjà existant`);
+      return res.status(409).send({
+        code: 0,
+        message: 'Joueur déjà existant',
+      }) as Response<Error>;
+    }
+
     await this.playerService.create(createPlayerDto);
 
     Logger.log(`Joueur ${createPlayerDto.id} créé avec succès`);
