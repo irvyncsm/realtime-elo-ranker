@@ -1,4 +1,4 @@
 export class CreatePlayerDto {
-    id: string;
-    rank: number;
-  }
+  id: string;
+  rank: number;
+}
