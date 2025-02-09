@@ -1,6 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PlayerService } from './player.service';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
 import { Player } from 'src/entities/player.entity';
 import { Repository } from 'typeorm';
 
@@ -10,13 +10,16 @@ describe('PlayerService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        PlayerService,
-        {
-          provide: getRepositoryToken(Player),
-          useClass: Repository,
-        },
+      imports: [
+        TypeOrmModule.forRoot({
+          type: 'sqlite',
+          database: ':memory:',
+          entities: [Player],
+          synchronize: true,
+        }),
+        TypeOrmModule.forFeature([Player]),
       ],
+      providers: [PlayerService],
     }).compile();
 
     service = module.get<PlayerService>(PlayerService);
