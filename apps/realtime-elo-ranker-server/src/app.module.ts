@@ -5,7 +5,6 @@ import { AppService } from './app.service';
 import { MatchController } from './api/match/match.controller';
 import { PlayerController } from './api/player/player.controller';
 import { RankingController } from './api/ranking/ranking.controller';
-import { RankingService } from './api/ranking/ranking.service';
 import { RankingModule } from './api/ranking/ranking.module';
 import { MatchModule } from './api/match/match.module';
 import { PlayerModule } from './api/player/player.module';
@@ -23,6 +22,6 @@ import { PlayerModule } from './api/player/player.module';
     MatchModule,
   ],
   controllers: [AppController, PlayerController, MatchController, RankingController],
-  providers: [AppService, RankingService],
+  providers: [AppService],
 })
 export class AppModule {}
